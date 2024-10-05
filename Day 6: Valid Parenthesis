@@ -1,0 +1,34 @@
+class Solution {
+public:
+    bool isValid(string s) {
+
+    std::stack<char> stack;  // Create an empty stack to store opening brackets
+    std::unordered_map<char, char> bracket_map = {  // Map closing brackets to opening brackets
+        {')', '('},
+        {'}', '{'},
+        {']', '['}
+    };
+
+    for (char& c : s) {  // Iterate through each character in the string
+        if (bracket_map.count(c)) {  // Check if the character is a closing bracket
+            char top_element = stack.empty() ? '#' : stack.top();  // Get the top element if stack is not empty
+            if (top_element == '#') {  // If the stack is empty, use '#' as a placeholder
+                return false;  // No matching opening bracket
+            }
+            stack.pop();  // Remove the top element from the stack
+            if (bracket_map[c] != top_element) {  // Check if the closing bracket matches the last opening bracket
+                return false;  // Mismatch found
+            }
+        } else {  // If the character is an opening bracket
+            stack.push(c);  // Push the opening bracket onto the stack
+        }
+    }
+
+    return stack.empty();  // Return true if the stack is empty (valid), otherwise false
+}
+
+
+};
+
+        
+    
